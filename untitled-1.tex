@@ -1,0 +1,238 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\newcounter{problem}
+\renewcommand{\qed}{\hfill\textsc{\textbf{Q.E.D.}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\D}{\ensuremath{\mathbb{D}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\res}{\textrm{res}}
+\newcommand{\sgn}{\textrm{sgn}}
+\renewcommand{\Re}{\ensuremath{\mathrm{Re}}}
+\renewcommand{\Im}{\ensuremath{\mathrm{Im}}}
+\newcommand{\Inn}{\textrm{Inn}}
+\newcommand{\Aut}{\textrm{Aut}}
+\newcommand{\Perm}{\textrm{Perm}}
+\newcommand{\term}[1]{\emph{\textbf{#1}}}
+\newenvironment{problem}[1][\stepcounter{problem}\theproblem]{\bigskip\noindent\textsc{Exercise #1.}\smallskip\par\begin{itshape}}{\end{itshape}}
+\newenvironment{solution}[1][\hspace{-1ex}.]{\medskip\noindent\textsc{Solution #1}\smallskip\par}{\hspace*{\fill}\\ \hspace*{0pt}\qed \clearpage}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{claim}{Claim}
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\renewcommand{\labelenumii}{(\roman{enumii})}
+\begin{document}
+\addtocounter{page}{-1}
+\title{Problem Set \#7 \\ Math 467 -- Complex Analysis}
+\author{Clayton J. Lungstrum}
+\date{\today}
+\maketitle
+\thispagestyle{empty} %no page number
+\clearpage
+
+\begin{problem}
+    Calculate
+    \[
+        \int_{|z|=2}\tan z\,dz.
+    \]
+\end{problem}
+
+\begin{solution}
+    Using the argument principle, define $f(z)=\cos z$ and notice that $f(z)$ has two zeros in the set $B_2(0)$ and no poles. Thus, we have
+    \[
+        \frac{1}{2\pi i}\int_{|z|=2}\tan z\,dz=\frac{-1}{2\pi i}\int_{|z|=2}\frac{g'(z)}{g(z)}\,dz=2.
+    \]
+    For the last identity, multiply both sides by $-2\pi i$ and we find
+    \[
+        \int_{|z|=2}\tan z\,dz=-4\pi i.
+    \]
+\end{solution}
+
+\begin{problem}
+    Calculate
+    \[
+        \int_{-\pi}^\pi\frac{\sin n\theta}{\sin\theta}\,d\theta.
+    \]
+\end{problem}
+
+\begin{solution}
+    We claim
+    \[
+        \int_{-\pi}^\pi\frac{\sin n\theta}{\sin\theta}\,d\theta=\begin{cases}
+            0 &:\ n\text{ is even}\\
+            2\pi &:\ n\text{ is odd}
+            \end{cases}
+    \]
+    To see how clear this is, recall Euler's formula
+    \[
+        \sin\pi z=\frac{e^{i\pi z}-e^{-i\pi z}}{2i}.
+    \]
+    Thus, we can rewrite the integral as
+    \[
+        \int_{-\pi}^\pi\frac{e^{in\theta}-e^{-in\theta}}{e^{i\theta}-e^{-i\theta}}\,d\theta.
+    \]
+    Setting $z=e^{i\theta}$ so that $\frac{dz}{iz}=d\theta$, and we see the contour arising from this change of variables is precisely $S^1$ and now we have
+    \begin{align*}
+        \int_{|z|=1}\frac{z^n-z^{-n}}{z-z^{-1}}\,dz&=\int_{|z|=1}\frac{z^{-n}}{z^{-1}}\cdot\frac{z^{2n}-1}{z^2-1}\,dz\\
+        &=\int_{|z|=1}\frac{1}{z^{n-1}}\cdot\sum_{k=0}^{n-1}z^{2n}\,dz.
+    \end{align*}
+    Now we can easily see the order of the residue at $z=0$ is of order $n-1$, and an easy calculation shows the result claimed above. During calculations, remember to treat the cases when $n$ is even and when $n$ is odd separately.
+    
+\end{solution}
+
+\begin{problem}
+    Suppose that $f$ and $g$ are holomorphic on a region $\Omega$ and that $fg\equiv0$ on $\Omega$. Prove that either $f$ or $g$ is identically zero on $\Omega$.
+\end{problem}
+
+\begin{solution}
+    We begin with a lemma.
+    \begin{lemma}
+        Let $f_1,\ldots,f_n$ be holomorphic functions on a  bounded region $\Omega$ with distinct points $\{z_k\}_{k=1}^\infty$ having a limit point in $\Omega$ such that
+        \[
+            \prod_{i=1}^n f_i(z_j)=0
+        \]
+        for $j=1,\ldots$. Then $f_p\equiv0$ for some $1\leq p\leq n$.
+    \end{lemma}
+    
+    \begin{proof}
+        Since the points are distinct and have a limit point in $\Omega$, clearly
+        \[
+            \prod_{i=1}^n f_i\equiv0.
+        \]
+        To see this, simply define $g(z)$ to be the product and apply a previous theorem.
+        
+        Moreover, it's clear that at least one $f_i$ will have infinitely many zeros by the pigeonhole principle. Taking a compact subset $\Omega'\subseteq\Omega $ if necessary, we see that these zeros will have a limit point in $\Omega'$, hence in $\Omega$, therefore $f_i\equiv 0$, as desired.
+    \end{proof}
+    
+    Now we see the exercise becomes a trivial corollary to the lemma, since we can define $\Omega_1\subseteq \Omega$ to be a bounded subset.
+\end{solution}
+
+\begin{problem}
+    Let $f$ be holomorphic on $|z|\leq1$ with $|f|<1$ when $|z|=1$. Show that $f(z)-z^3=0$ has exactly $3$ solutions in $|z|<1$.
+\end{problem}
+
+\begin{solution}
+    Clearly $g(z)=z^3$ has three zeros in $\D$. By hypothesis, observe
+    \[
+        |-g(z)|=|g(z)|=1>|f(z)|.
+    \]
+    By Rouch\'{e}s theorem, we know $f(z)-g(z)=0$ will have as many solutions as $g(z)$, and therefore $f(z)=z^3$ has exactly three solutions. 
+\end{solution}
+
+\begin{problem}
+    How many zeros does $p(z)=z^4+z^2-2z+6$ have in the first quadrant?
+\end{problem}
+
+\begin{solution}
+    Using the argument principle, define $Z$ to be the number of zeros of $p(z)$ in the first quadrant, $P$ to be the number of poles in the first quadrant, and $\Gamma$ to be the semi-circle with radius $R$ such that $\Re(z)>0$ for $z\in \Gamma$ along with the portion of the imaginary axis between them. Clearly, on the imaginary axis, since all numbers are real except the term of degree $1$, no zeros can occur on the imaginary axis except possibly at $z=0$; however, $p(0)=6$, thus $z=0$ is not a root. As there are only finitely many roots, we can be sure to choose $R$ greater than the maximum modulus of the zeros. Since no zeros or poles are contained on $\Gamma$, we now we
+    \[
+        \int_\Gamma\frac{p'(z)}{p(z)}\,dz=Z-P=Z
+    \]
+    as $p(z)$ is entire, and therefore has no poles. To show that the imaginary axis doesn't contribute any to the argument, letting $z=x+iy$, we find that on the imaginary axis
+    \[
+        p(z)=y^4-y^2+6-2iy.
+    \]
+    Using elementary algebra and calculus, we find the zeros of the derivative of the real part of $p(z)$ to be $y=-1,0,1$, each corresponding to a maximum/minimum of the real part of $p(z)$. Since we can verify all of these are positive, and the function remains positive, we see that for $z=iy$, $\Re(p(z))>0$ so the argument is only dependent on the initial and final points. At $z=iR$, we have 
+    \[
+        \theta=\lim_{R\to\infty}\arctan\left(-\frac{2}{R^3}\right)=0. 
+    \]
+    When $z=-iR$, we have
+    \[
+        \theta=\lim_{R\to\infty}\arctan\left(\frac{2}{R^3}\right)=0.
+    \]
+    Therefore, we see the change in argument on the imaginary axis is $0$.
+    
+    Finally, on the half-circle, for large enough $R$, $p(z)\sim z^4=R^4e^{4i\theta}$ for $-\pi/2\leq\theta\leq\pi/2$. Calculating this, shows the argument changes by $4\pi$, therefore, after dividing by $2\pi$, we see that there are two zeros with $\Re(z)>0$. Dividing by $2$, since there must be as many in the first quadrant as in the fourth quadrant, we see that there is exactly $1$ zero in the first quadrant.
+\end{solution}
+
+\begin{problem}
+    How many zeros does $f(z)=3z^{100}-e^z$ have in $|z|<1$? Are they all distinct?
+\end{problem}
+
+\begin{solution}
+    Again, an easy application of Rouch\'{e}'s theorem shows us that there exists exactly $100$ solutions in the unit disc. To see that the solutions are all distinct, suppose there is a repeated root, say $f(z)=(z-a)^kg(z)$ with $k\geq2$ and $g(z)$ holomorphic and non-vanishing at $z=a$. Then we can easily see
+    \[
+        f'(z)=(z-a)^kg'(z)+k(z-a)^{k-1}g(z).
+    \]
+    It's clear that $f'(a)=0$, and therefore $a$ satisfies the following equations:
+    \begin{align*}
+        3a^{100}-e^a&=0\\
+        300a^{99}-e^a&=0.
+    \end{align*}
+    Subtracting the equations and factoring, we have
+    \[
+        3a^{99}(a-100)=0.
+    \]
+    Now we have that $a=0$ or $a=100$. Since we've already established the roots to be in the unit disc, $a=100$ is certainly not a root. Likewise, $a=0$ is not a root since $f(0)=1$. This shows there are no repeated roots of $f(z)$.
+\end{solution}
+
+\begin{problem}
+    Suppose $f$ is entire and there are constants $a$ and $b$ in $\R$ such that
+    \[
+        |f(z)|\leq a\sqrt{|z|}+b
+    \]
+    for all $z\in\C$.
+\end{problem}
+
+\begin{solution}
+    From a previous problem, we know that if 
+    \[
+        |f(z)|\leq a|z|^s+b,
+    \]
+    then $f(z)$ is a polynomial of degree at most $s$. Here, since $s=1/2$, $f(z)$ must be constant and must be in the disc of radius $b$.
+\end{solution}
+
+\begin{problem}
+    Find the order of growth of the following entire functions:
+    \begin{enumerate}
+        \item $p(z)$ where $p$ is a polynomial.
+        
+        \item $e^{bz^n}$ for $b\neq0$.
+        
+        \item $e^{e^z}$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}\hfill
+    \begin{enumerate}
+        \item From class, we know that $\rho=0$.
+        
+        \item From the definition, we know $\rho=n$.
+        
+        \item Again, from definition, we know $\rho=\infty$ since $e^z$ does not have polynomial growth.
+    \end{enumerate}
+\end{solution}
+
+\begin{problem}
+    Establish the following properties of infinite products.
+    \begin{enumerate}
+        \item Show that if $\sum|a_n|^2$ converges, and $a_n\neq-1$, then the product $\prod(1+a_n)$ converges to a non-zero limit if and only if $\sum a_n$ converges.
+
+        \item Find an example of a sequence of complex numbers $\{a_n\}$ such that $\sum a_n$ converges but $\prod (1+a_n)$ diverges.
+
+        \item Also find an example such that $\prod(1+a_n)$ converges and $\sum a_n$ diverges.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}\hfill
+    \begin{enumerate}
+        \item Suppose first that the product converges. The fact that $\sum|a_n|^2$ converges implies that for large enough $n$, say for $n>N$, we have $|a_n|<\frac{1}{2}$. These together imply that $\sum_{n=N+1}^\infty\log(1+a_n)$ converges. From the power series expansion, we know that $0<a_n-\log(1+a_n)<a_n^2$, which tells us $\sum_{n=N+1}^\infty a_n-\log(1+a_n)$ converges absolutely, hence converges. This says the convergence of $\sum_{n=N+1}^\infty a_n$ and $\sum_{n=N+1}^\infty \log(1+a_n)$ are equivalent. Since we know one converges from above, we know the other must converge.
+            
+            Conversely, suppose $\sum a_n$ converges. Disregarding finitely many terms if necessary, we can assume $|a_n|<\frac{1}{2}$ for all $n$. Thus, we know $0\leq|a_n-\log(1+a_n)|<|a_n|^2$, so by comparison, we know $\sum_{n=1}^\infty |a_n-\log(1+a_n)|$ converges. Since it is absolutely convergent, it is convergent, so now we have \[\sum_{n=1}^\infty a_n-\sum_{n=1}^\infty\left( a_n-\log(1+a_n)\right)=\sum_{n=1}^\infty\log(1+a_n),\]therefore the series is convergent as a sum of two convergent series.
+        
+        \item If we take $a_n=\frac{(-1)^n}{n}$, then the sum clearly converges, while the product diverges (according to our definition of convergence, the limit must be nonzero).
+        
+        \item Take
+            \[
+                a_{2n-1}=\frac{-1}{\sqrt{n+1}},\quad a_{2n}=\frac{1}{\sqrt{n+1}}+\frac{1}{n+1}.
+            \]
+            It is not complicated to verify this satisfies the conditions.
+    \end{enumerate}
+\end{solution}
+\end{document}

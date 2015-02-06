@@ -1,0 +1,733 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     24953,        723]
+NotebookOptionsPosition[     24707,        710]
+NotebookOutlinePosition[     25052,        725]
+CellTagsIndexPosition[     25009,        722]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"gamma", "=", "40000"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"eps1", "=", "1"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"eps2", "=", "11.9"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"eps3", "=", "250"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"c", "=", "299792458"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"hbar", "=", "1.05457173*^-34"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"beta", "=", 
+     RowBox[{"Sqrt", "[", 
+      RowBox[{"1", "-", 
+       RowBox[{"1", "/", 
+        RowBox[{"gamma", "^", "2"}]}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"e", "=", "1.602*^-19"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"n", "=", "2*^10"}], ";"}], 
+   RowBox[{"(*", 
+    RowBox[{"number", " ", "of", " ", "electrons"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"q", "=", 
+     RowBox[{"n", "*", "e"}]}], ";"}], 
+   RowBox[{"(*", 
+    RowBox[{"bunch", " ", "charge", " ", "in", " ", "Coulombs"}], "*)"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"a", "=", "0.02"}], " ", ";"}], 
+   RowBox[{"(*", 
+    RowBox[{"lense", " ", "diameter", " ", "in", " ", "m"}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"d", "=", "0.05"}], " ", ";"}], 
+   RowBox[{"(*", 
+    RowBox[{
+    "distance", " ", "from", " ", "foil", " ", "to", " ", "lens", " ", "in", 
+     " ", "m"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"rad", "=", "0.02"}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{
+    "radius", " ", "of", " ", "diffraction", " ", "radiation", " ", "hole", 
+     " ", "in", " ", "m"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"lowerlambda", "=", "300"}], ";"}], 
+   RowBox[{"(*", 
+    RowBox[{"Visible", " ", "Spectrum", " ", "nm"}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"averagelambda", "=", "500"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"upperlambda", "=", "700"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"eps0", "=", "8.854*^-12"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"sigx", "=", "20*^-6"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"sigy", "=", "sigx"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"sigz", "=", "20*^-6"}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"thetalens", "=", 
+    RowBox[{"ArcTan", "[", 
+     RowBox[{"a", "/", "d"}], "]"}]}], "\n", 
+   RowBox[{
+    RowBox[{"thetamax", "=", 
+     RowBox[{"1", "/", "gamma"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"lowerfreq", "=", 
+     RowBox[{"2", "*", "Pi", "*", 
+      RowBox[{"c", "/", 
+       RowBox[{"(", 
+        RowBox[{"upperlambda", "*", "1*^9"}], ")"}]}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"averagefreq", "=", 
+     RowBox[{"2", "*", "Pi", "*", 
+      RowBox[{"c", "/", 
+       RowBox[{"(", 
+        RowBox[{"averagelambda", "*", "1*^-9"}], ")"}]}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"upperfreq", "=", 
+     RowBox[{"2", "*", "Pi", "*", 
+      RowBox[{"c", "/", 
+       RowBox[{"(", 
+        RowBox[{"lowerlambda", "*", "1*^-9"}], ")"}]}]}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Fn", "[", 
+     RowBox[{"theta_", ",", "eps1_", ",", "eps2_", ",", "beta_"}], "]"}], ":=",
+     "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"eps2", "-", "eps1"}], ")"}], "*", 
+     RowBox[{"(", 
+      RowBox[{"1", "-", 
+       RowBox[{
+        RowBox[{"beta", "^", "2"}], "*", "eps1"}], "+", 
+       RowBox[{"beta", "*", 
+        RowBox[{"Sqrt", "[", 
+         RowBox[{"eps2", "-", 
+          RowBox[{"eps1", "*", 
+           RowBox[{
+            RowBox[{"Sin", "[", "theta", "]"}], "^", "2"}]}]}], "]"}]}]}], 
+      ")"}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Fd", "[", 
+     RowBox[{"theta_", ",", "eps1_", ",", "eps2_", ",", "beta_"}], "]"}], ":=",
+     "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"1", "-", 
+       RowBox[{
+        RowBox[{"beta", "^", "2"}], "eps1", "*", 
+        RowBox[{
+         RowBox[{"Cos", "[", "theta", "]"}], "^", "2"}]}]}], ")"}], "*", 
+     RowBox[{"(", 
+      RowBox[{"1", "+", 
+       RowBox[{"beta", "*", 
+        RowBox[{"Sqrt", "[", 
+         RowBox[{"eps2", "-", 
+          RowBox[{"eps1", "*", 
+           RowBox[{
+            RowBox[{"Sin", "[", "theta", "]"}], "^", "2"}]}]}], "]"}]}]}], 
+      ")"}], "*", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"eps2", "*", 
+        RowBox[{"Cos", "[", "theta", "]"}]}], "+", 
+       RowBox[{"Sqrt", "[", 
+        RowBox[{
+         RowBox[{"eps1", "*", "eps2"}], "-", 
+         RowBox[{
+          RowBox[{"eps1", "^", "2"}], "*", 
+          RowBox[{
+           RowBox[{"Sin", "[", "theta", "]"}], "^", "2"}]}]}], "]"}]}], 
+      ")"}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"dWdwdomega", "[", 
+     RowBox[{
+     "theta_", ",", "gamma_", ",", "eps1_", ",", "eps2_", ",", "e_", ",", 
+      "c_", ",", "beta_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"1", "/", 
+      RowBox[{"(", 
+       RowBox[{"4", " ", "*", "Pi", "*", "eps0"}], ")"}]}], "*", 
+     RowBox[{"e", "^", "2"}], "*", 
+     RowBox[{
+      RowBox[{"beta", "^", "2"}], "/", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"Pi", "^", "2"}], "*", "c"}], ")"}]}], "*", 
+     RowBox[{"Sqrt", "[", "eps1", "]"}], "*", 
+     RowBox[{
+      RowBox[{"Sin", "[", "theta", "]"}], "^", "2"}], "*", 
+     RowBox[{
+      RowBox[{"Cos", "[", "theta", "]"}], "^", "2"}], "*", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"eps2", "-", "eps1"}], ")"}], "*", 
+         RowBox[{"(", 
+          RowBox[{"1", "-", 
+           RowBox[{
+            RowBox[{"beta", "^", "2"}], "*", "eps1"}], "+", 
+           RowBox[{"beta", "*", 
+            RowBox[{"Sqrt", "[", 
+             RowBox[{"eps2", "-", 
+              RowBox[{"eps1", "*", 
+               RowBox[{
+                RowBox[{"Sin", "[", "theta", "]"}], "^", "2"}]}]}], "]"}]}]}],
+           ")"}]}], ")"}], "^", "2"}], "/", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"1", "-", 
+           RowBox[{
+            RowBox[{"beta", "^", "2"}], "eps1", "*", 
+            RowBox[{
+             RowBox[{"Cos", "[", "theta", "]"}], "^", "2"}]}]}], ")"}], "*", 
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           RowBox[{"beta", "*", 
+            RowBox[{"Sqrt", "[", 
+             RowBox[{"eps2", "-", 
+              RowBox[{"eps1", "*", 
+               RowBox[{
+                RowBox[{"Sin", "[", "theta", "]"}], "^", "2"}]}]}], "]"}]}]}],
+           ")"}], "*", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"eps2", "*", 
+            RowBox[{"Cos", "[", "theta", "]"}]}], "+", 
+           RowBox[{"Sqrt", "[", 
+            RowBox[{
+             RowBox[{"eps1", "*", "eps2"}], "-", 
+             RowBox[{
+              RowBox[{"eps1", "^", "2"}], "*", 
+              RowBox[{
+               RowBox[{"Sin", "[", "theta", "]"}], "^", "2"}]}]}], "]"}]}], 
+          ")"}]}], ")"}], "^", "2"}]}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"dWdw", "[", 
+     RowBox[{
+     "theta_", ",", "gamma_", ",", "eps1_", ",", "eps2_", ",", "e_", ",", 
+      "c_", ",", "beta_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"1", "/", 
+      RowBox[{"(", 
+       RowBox[{"4", " ", "*", "Pi", "*", "eps0"}], ")"}]}], "*", 
+     RowBox[{"(", 
+      RowBox[{"2", "*", "Pi", "*", 
+       RowBox[{"Sin", "[", "theta", "]"}]}], ")"}], "*", 
+     RowBox[{"e", "^", "2"}], "*", 
+     RowBox[{
+      RowBox[{"beta", "^", "2"}], "/", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"Pi", "^", "2"}], "*", "c"}], ")"}]}], "*", 
+     RowBox[{"Sqrt", "[", "eps1", "]"}], "*", 
+     RowBox[{
+      RowBox[{"Sin", "[", "theta", "]"}], "^", "2"}], "*", 
+     RowBox[{
+      RowBox[{"Cos", "[", "theta", "]"}], "^", "2"}], "*", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"eps2", "-", "eps1"}], ")"}], "*", 
+         RowBox[{"(", 
+          RowBox[{"1", "-", 
+           RowBox[{
+            RowBox[{"beta", "^", "2"}], "*", "eps1"}], "+", 
+           RowBox[{"beta", "*", 
+            RowBox[{"Sqrt", "[", 
+             RowBox[{"eps2", "-", 
+              RowBox[{"eps1", "*", 
+               RowBox[{
+                RowBox[{"Sin", "[", "theta", "]"}], "^", "2"}]}]}], "]"}]}]}],
+           ")"}]}], ")"}], "^", "2"}], "/", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"1", "-", 
+           RowBox[{
+            RowBox[{"beta", "^", "2"}], "eps1", "*", 
+            RowBox[{
+             RowBox[{"Cos", "[", "theta", "]"}], "^", "2"}]}]}], ")"}], "*", 
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           RowBox[{"beta", "*", 
+            RowBox[{"Sqrt", "[", 
+             RowBox[{"eps2", "-", 
+              RowBox[{"eps1", "*", 
+               RowBox[{
+                RowBox[{"Sin", "[", "theta", "]"}], "^", "2"}]}]}], "]"}]}]}],
+           ")"}], "*", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"eps2", "*", 
+            RowBox[{"Cos", "[", "theta", "]"}]}], "+", 
+           RowBox[{"Sqrt", "[", 
+            RowBox[{
+             RowBox[{"eps1", "*", "eps2"}], "-", 
+             RowBox[{
+              RowBox[{"eps1", "^", "2"}], "*", 
+              RowBox[{
+               RowBox[{"Sin", "[", "theta", "]"}], "^", "2"}]}]}], "]"}]}], 
+          ")"}]}], ")"}], "^", "2"}]}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"dWdwdomegaideal", "[", 
+     RowBox[{"theta_", ",", "gamma_", ",", "e_", ",", "c_", ",", "beta_"}], 
+     "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"1", "/", 
+      RowBox[{"(", 
+       RowBox[{"4", " ", "*", "Pi", "*", "eps0"}], ")"}]}], "*", 
+     RowBox[{"e", "^", "2"}], "*", 
+     RowBox[{"beta", "^", "2"}], "*", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Sin", "[", "theta", "]"}], "^", "2"}], "/", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"Pi", "^", "2"}], "*", "c", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"1", "-", 
+           RowBox[{
+            RowBox[{"beta", "^", "2"}], "*", 
+            RowBox[{
+             RowBox[{"Cos", "[", "theta", "]"}], "^", "2"}]}]}], ")"}], "^", 
+         "2"}]}], ")"}]}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"dWdwideal", "[", 
+     RowBox[{"theta_", ",", "gamma_", ",", "e_", ",", "c_", ",", "beta_"}], 
+     "]"}], ":=", "\n", 
+    RowBox[{
+     RowBox[{"1", "/", 
+      RowBox[{"(", 
+       RowBox[{"4", " ", "*", "Pi", "*", "eps0"}], ")"}]}], 
+     RowBox[{
+      RowBox[{"e", "^", "2"}], "/", 
+      RowBox[{"(", 
+       RowBox[{"2", "*", "Pi", "*", "c"}], ")"}]}], "*", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"2", "*", 
+         RowBox[{"(", 
+          RowBox[{"1", "-", 
+           RowBox[{"beta", "^", "2"}]}], ")"}], "*", 
+         RowBox[{
+          RowBox[{"Cos", "[", "theta", "]"}], "/", 
+          RowBox[{"(", 
+           RowBox[{"1", "-", 
+            RowBox[{
+             RowBox[{"beta", "^", "2"}], "*", 
+             RowBox[{
+              RowBox[{"Cos", "[", "theta", "]"}], "^", "2"}]}]}], ")"}]}]}], 
+        ")"}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            RowBox[{"beta", "^", "2"}]}], ")"}], "/", "beta"}], ")"}], "*", 
+        RowBox[{"Log", "[", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"1", "-", 
+             RowBox[{"beta", "*", 
+              RowBox[{"Cos", "[", "theta", "]"}]}]}], ")"}], "*", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"1", "+", "beta"}], ")"}], "/", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"1", "+", 
+                RowBox[{"beta", "*", 
+                 RowBox[{"Cos", "[", "theta", "]"}]}]}], ")"}], "*", 
+              RowBox[{"(", 
+               RowBox[{"1", "-", "beta"}], ")"}]}], ")"}]}]}], ")"}], "]"}]}],
+        "-", "2"}], ")"}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Dens", "[", 
+     RowBox[{"x_", ",", "y_", ",", "sigx_", ",", "sigy_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"1", "/", 
+      RowBox[{"(", 
+       RowBox[{"2", "*", "Pi", "*", "sigx", "*", "sigy"}], ")"}]}], "*", 
+     RowBox[{"Exp", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"-", "1"}], "/", "2"}], "*", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"x", "/", "sigx"}], ")"}], "^", "2"}], "+", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"y", "/", "sigy"}], ")"}], "^", "2"}]}], ")"}]}], 
+      "]"}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"IntensityOTRX", "[", 
+     RowBox[{
+     "x_", ",", "sigx_", ",", "sigy_", ",", "gamma_", ",", "e_", ",", "c_", 
+      ",", "beta_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"NIntegrate", "[", 
+      RowBox[{
+       RowBox[{"Dens", "[", 
+        RowBox[{"x", ",", "y", ",", "sigx", ",", "sigy"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{
+          RowBox[{"-", "6"}], "*", "sigy"}], ",", 
+         RowBox[{"6", "*", "sigy"}]}], "}"}]}], "]"}], "*", "2", "*", 
+     RowBox[{"dWdwideal", "[", 
+      RowBox[{
+       RowBox[{"Pi", "/", "2"}], ",", "gamma", ",", "e", ",", "c", ",", 
+       "beta"}], "]"}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"IntensityOTRY", "[", 
+     RowBox[{
+     "y_", ",", "sigx_", ",", "sigy_", ",", "gamma_", ",", "e_", ",", "c_", 
+      ",", "beta_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"NIntegrate", "[", 
+      RowBox[{
+       RowBox[{"Dens", "[", 
+        RowBox[{"x", ",", "y", ",", "sigx", ",", "sigy"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{
+          RowBox[{"-", "6"}], "*", "sigx"}], ",", 
+         RowBox[{"6", "*", "sigx"}]}], "}"}]}], "]"}], "*", "2", "*", 
+     RowBox[{"dWdwideal", "[", 
+      RowBox[{
+       RowBox[{"Pi", "/", "2"}], ",", "gamma", ",", "e", ",", "c", ",", 
+       "beta"}], "]"}]}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Intensity1", "[", 
+     RowBox[{"ux_", ",", "uy_", ",", "sigx_", ",", "sigy_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"2", "*", "Pi", "*", "c", "*", 
+     RowBox[{"1", "/", 
+      RowBox[{"Pi", "^", "2"}]}], "*", 
+     RowBox[{
+      RowBox[{"e", "^", "2"}], "/", "c"}], "*", 
+     RowBox[{"1", "/", 
+      RowBox[{"beta", "^", "2"}]}], "*", "n", "*", 
+     RowBox[{"1", "/", 
+      RowBox[{"(", 
+       RowBox[{"2", "*", "Pi", "*", "sigx", "*", "sigy"}], ")"}]}], "*", 
+     RowBox[{"NIntegrate", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"1", "/", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"gamma", "^", "2"}], "*", 
+           RowBox[{"lambda", "^", "2"}]}], ")"}]}], "*", 
+        RowBox[{
+         RowBox[{"BesselK", "[", 
+          RowBox[{"1", ",", 
+           RowBox[{
+            RowBox[{"1", "/", 
+             RowBox[{"(", 
+              RowBox[{"gamma", "*", "lambda"}], ")"}]}], "*", 
+            RowBox[{"Sqrt", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"ux", "-", "x"}], ")"}], "^", "2"}], "+", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"uy", "-", "y"}], ")"}], "^", "2"}]}], "]"}]}]}], 
+          "]"}], "^", "2"}], "*", 
+        RowBox[{"Exp", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", "1"}], "/", "2"}], "*", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"x", "^", "2"}], "/", 
+             RowBox[{"sigx", "^", "2"}]}], "+", 
+            RowBox[{
+             RowBox[{"y", "^", "2"}], "/", 
+             RowBox[{"sigy", "^", "2"}]}]}], ")"}]}], "]"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{
+          RowBox[{"-", "6"}], "*", "sigx"}], ",", 
+         RowBox[{"6", "*", "sigx"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{
+          RowBox[{"-", "6"}], "*", "sigy"}], ",", 
+         RowBox[{"6", "*", "sigy"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"lambda", ",", "lowerlambda", ",", "upperlambda"}], "}"}], 
+       ",", 
+       RowBox[{"PrecisionGoal", "\[Rule]", "6"}]}], "]"}]}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Intensity2", "[", 
+     RowBox[{"ux_", ",", "uy_", ",", "lambda_", ",", "sigx_", ",", "sigy_"}], 
+     "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"2", "*", "Pi", "*", "c", "*", 
+     RowBox[{"1", "/", 
+      RowBox[{"Pi", "^", "2"}]}], "*", 
+     RowBox[{
+      RowBox[{"e", "^", "2"}], "/", "c"}], "*", 
+     RowBox[{"1", "/", 
+      RowBox[{"beta", "^", "2"}]}], "*", "n", "*", 
+     RowBox[{"1", "/", 
+      RowBox[{"(", 
+       RowBox[{"2", "*", "Pi", "*", "sigx", "*", "sigy"}], ")"}]}], "*", 
+     RowBox[{"NIntegrate", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"1", "/", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"gamma", "^", "2"}], "*", 
+           RowBox[{"lambda", "^", "4"}]}], ")"}]}], "*", 
+        RowBox[{
+         RowBox[{"BesselK", "[", 
+          RowBox[{"1", ",", 
+           RowBox[{
+            RowBox[{"1", "/", 
+             RowBox[{"(", 
+              RowBox[{"gamma", "*", "lambda"}], ")"}]}], "*", 
+            RowBox[{"Sqrt", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"ux", "-", "x"}], ")"}], "^", "2"}], "+", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"uy", "-", "y"}], ")"}], "^", "2"}]}], "]"}]}]}], 
+          "]"}], "^", "2"}], "*", 
+        RowBox[{"Exp", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", "1"}], "/", "2"}], "*", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"x", "^", "2"}], "/", 
+             RowBox[{"sigx", "^", "2"}]}], "+", 
+            RowBox[{
+             RowBox[{"y", "^", "2"}], "/", 
+             RowBox[{"sigy", "^", "2"}]}]}], ")"}]}], "]"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{
+          RowBox[{"-", "6"}], "*", "sigx"}], ",", 
+         RowBox[{"6", "*", "sigx"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{
+          RowBox[{"-", "6"}], "*", "sigy"}], ",", 
+         RowBox[{"6", "*", "sigy"}]}], "}"}], ",", 
+       RowBox[{"PrecisionGoal", "\[Rule]", "6"}]}], "]"}]}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"IntensityX", "[", 
+     RowBox[{
+     "ux_", ",", "a_", ",", "uymax_", ",", "lambda_", ",", "sigx_", ",", 
+      "sigy_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"2", "*", "Pi", "*", "c", "*", 
+     RowBox[{"1", "/", 
+      RowBox[{"Pi", "^", "2"}]}], "*", 
+     RowBox[{
+      RowBox[{"e", "^", "2"}], "/", "c"}], "*", 
+     RowBox[{"1", "/", 
+      RowBox[{"beta", "^", "2"}]}], "*", "n", "*", 
+     RowBox[{"1", "/", 
+      RowBox[{"(", 
+       RowBox[{"2", "*", "Pi", "*", "sigx", "*", "sigy"}], ")"}]}], "*", 
+     RowBox[{"NIntegrate", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"1", "/", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"gamma", "^", "2"}], "*", 
+           RowBox[{"lambda", "^", "4"}]}], ")"}]}], "*", 
+        RowBox[{
+         RowBox[{"BesselK", "[", 
+          RowBox[{"1", ",", 
+           RowBox[{
+            RowBox[{"1", "/", 
+             RowBox[{"(", 
+              RowBox[{"gamma", "*", "lambda"}], ")"}]}], "*", 
+            RowBox[{"Sqrt", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"ux", "-", "x"}], ")"}], "^", "2"}], "+", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"uy", "-", "y"}], ")"}], "^", "2"}]}], "]"}]}]}], 
+          "]"}], "^", "2"}], "*", 
+        RowBox[{"Exp", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", "1"}], "/", "2"}], "*", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"x", "^", "2"}], "/", 
+             RowBox[{"sigx", "^", "2"}]}], "+", 
+            RowBox[{
+             RowBox[{"y", "^", "2"}], "/", 
+             RowBox[{"sigy", "^", "2"}]}]}], ")"}]}], "]"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{
+          RowBox[{"-", "6"}], "*", "sigx"}], ",", 
+         RowBox[{"6", "*", "sigx"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{
+          RowBox[{"-", "6"}], "*", "sigy"}], ",", 
+         RowBox[{"6", "*", "sigy"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"uy", ",", "a", ",", "uymax"}], "}"}], ",", 
+       RowBox[{"PrecisionGoal", "\[Rule]", "6"}]}], "]"}]}]}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"IntensityY", "[", 
+     RowBox[{
+     "uxwidth_", ",", "uy_", ",", "lambda_", ",", "sigx_", ",", "sigy_"}], 
+     "]"}], " ", ":=", "\[IndentingNewLine]", 
+    RowBox[{"2", "*", "Pi", "*", "c", "*", 
+     RowBox[{"1", "/", 
+      RowBox[{"Pi", "^", "2"}]}], "*", 
+     RowBox[{
+      RowBox[{"e", "^", "2"}], "/", "c"}], "*", 
+     RowBox[{"1", "/", 
+      RowBox[{"beta", "^", "2"}]}], "*", "n", "*", 
+     RowBox[{"1", "/", 
+      RowBox[{"(", 
+       RowBox[{"2", "*", "Pi", "*", "sigx", "*", "sigy"}], ")"}]}], "*", 
+     RowBox[{"NIntegrate", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"1", "/", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"gamma", "^", "2"}], "*", 
+           RowBox[{"lambda", "^", "4"}]}], ")"}]}], "*", 
+        RowBox[{
+         RowBox[{"BesselK", "[", 
+          RowBox[{"1", ",", 
+           RowBox[{
+            RowBox[{"1", "/", 
+             RowBox[{"(", 
+              RowBox[{"gamma", "*", "lambda"}], ")"}]}], "*", 
+            RowBox[{"Sqrt", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"ux", "-", "x"}], ")"}], "^", "2"}], "+", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"uy", "-", "y"}], ")"}], "^", "2"}]}], "]"}]}]}], 
+          "]"}], "^", "2"}], "*", 
+        RowBox[{"Exp", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", "1"}], "/", "2"}], "*", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"x", "^", "2"}], "/", 
+             RowBox[{"sigx", "^", "2"}]}], "+", 
+            RowBox[{
+             RowBox[{"y", "^", "2"}], "/", 
+             RowBox[{"sigy", "^", "2"}]}]}], ")"}]}], "]"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{
+          RowBox[{"-", "6"}], "*", "sigx"}], ",", 
+         RowBox[{"6", "*", "sigx"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{
+          RowBox[{"-", "6"}], "*", "sigy"}], ",", 
+         RowBox[{"6", "*", "sigy"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"ux", ",", 
+         RowBox[{"-", "uxwidth"}], ",", "uxwidth"}], "}"}], ",", 
+       RowBox[{"PrecisionGoal", "\[Rule]", "6"}]}], "]"}]}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"IntensityOTRX", "[", 
+      RowBox[{
+      "x", ",", "sigx", ",", "sigy", ",", "gamma", ",", "e", ",", "c", ",", 
+       "beta"}], "]"}], ",", 
+     RowBox[{"IntensityX", "[", 
+      RowBox[{
+      "x", ",", "a", ",", "0.005", ",", "averagelambda", ",", "sigx", ",", 
+       "sigy"}], "]"}]}]}]}]}]], "Input",
+ CellChangeTimes->{{3.627681419326524*^9, 3.627681516137677*^9}, {
+  3.6276817330103526`*^9, 3.6276817353099856`*^9}, {3.6276817884100466`*^9, 
+  3.6276818506822*^9}, {3.627682192417101*^9, 3.6276822200817795`*^9}, {
+  3.6276823995648947`*^9, 3.627682475388144*^9}, {3.6276825157558556`*^9, 
+  3.6276825467082157`*^9}, {3.6276827628810887`*^9, 3.6276828092178183`*^9}}]
+},
+WindowSize->{1348, 666},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (September 9, 2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 24145, 688, 1472, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
